@@ -69,11 +69,11 @@ nav h1 {
   line-height: 0px;
   text-align: center;
 }
-.smoothie-card .buttons {
+.smoothie_card .buttons {
   text-align: right;
 }
 
-.smoothie-card i {
+.smoothie_card span {
   color: #bbb;
   margin-left: 10px;
   font-size: 1.2em;

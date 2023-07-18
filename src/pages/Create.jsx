@@ -23,7 +23,6 @@ const Create = () => {
       .from("smoothies")
       .insert([{ title, method, rating }])
       .select();
-
       
     if (error) {
       console.log(error);
