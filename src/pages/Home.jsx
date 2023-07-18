@@ -5,16 +5,17 @@ import SmoothieCard from "../components/SmoothieCard";
 const Home = () => {
   const [fetchError, setFetchError] = useState(null);
   const [smoothies, setSmoothies] = useState(null);
+  const [orderBy, setOrderBy] = useState("created_at");
 
   const handleDelete = (id) => {
-    setSmoothies(previousSmoothies => {
-      return previousSmoothies.filter(sm => sm.id !== id);
+    setSmoothies((previousSmoothies) => {
+      return previousSmoothies.filter((sm) => sm.id !== id);
     });
-  }
+  };
 
   useEffect(() => {
     const fetchSmoothies = async () => {
-      const { data, error } = await supabase.from("smoothies").select();
+      const { data, error } = await supabase.from("smoothies").select().order(orderBy, {ascending: false});
 
       if (error) {
         setFetchError("couldn't fetch database");
@@ -28,13 +29,22 @@ const Home = () => {
     };
 
     fetchSmoothies();
-  }, []);
+  }, [orderBy]);
 
   return (
     <div className="page home">
       {fetchError && <p>{fetchError}</p>}
       {setSmoothies && (
         <div className="smoothies">
+          <div className="order_by">
+            <p>Order by:</p>
+            <button onClick={() => setOrderBy("created_at")}>
+              Time Created
+            </button>
+            <button onClick={() => setOrderBy("title")}>Title</button>
+            <button onClick={() => setOrderBy("rating")}>Rating</button>
+            {orderBy}
+          </div>
           <div className="smoothie_grid">
             {smoothies?.map((smoothie) => (
               <SmoothieCard
